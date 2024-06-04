@@ -47,4 +47,27 @@ const registerUser = async (req, res) => {
         throw new Error("User not found");
     }
 };
-module.exports = { registerUser }
+//for login
+const authUser = asyncHandler(async (req, res) => {
+    const { email, password } = req.body;
+  
+    const user = await User.findOne({ email });
+  
+    if (user && (await user.matchPassword(password))) {
+      res.json({
+        _id: user._id,
+        name: user.name,
+        email: user.email,
+        year: user.year,
+        branch: user.branch,
+        course: user.course,
+        phoneNo: user.phoneNo,
+        registrationNo: user.registrationNo,
+      });
+    } else {
+      res.status(401);
+      throw new Error("Invalid Email or Password");
+    }
+  });
+  
+module.exports = { registerUser, authUser }
