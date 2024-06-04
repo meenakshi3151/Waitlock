@@ -11,7 +11,7 @@ const registerUser = async (req, res) => {
         throw new Error("Please Enter all the Feilds");
     }
     
-    const userExists = await User.findOne({ email });
+    const userExists = await User.findOne({ registrationNo});
 
     if (userExists) {
         res.status(400);
@@ -49,9 +49,9 @@ const registerUser = async (req, res) => {
 };
 //for login
 const authUser = asyncHandler(async (req, res) => {
-    const { email, password } = req.body;
+    const { registrationNo, password } = req.body;
   
-    const user = await User.findOne({ email });
+    const user = await User.findOne({ registrationNo });
   
     if (user && (await user.matchPassword(password))) {
       res.json({
@@ -70,4 +70,35 @@ const authUser = asyncHandler(async (req, res) => {
     }
   });
   
-module.exports = { registerUser, authUser }
+
+  const getAllUsers = asyncHandler(async (req, res) => {
+    const { registrationNo } = req.query; 
+    
+    // Log the registrationNo to ensure it is being received
+    console.log('Received registrationNo:', registrationNo); 
+    
+    if (!registrationNo) {
+        return res.status(400).json({ message: "registrationNo query parameter is required" });
+    }
+
+    const query = { registrationNo: { $regex: new RegExp(registrationNo, 'i') } };
+    
+    // Log the constructed query to debug
+    console.log('Constructed query:', query);
+
+    try {
+        const users = await User.find(query);
+        
+        if (users.length > 0) {
+            return res.status(200).json(users);
+        } else {
+            return res.status(404).json({ message: "No users found with the provided registration number" });
+        }
+    } catch (error) {
+        console.error('Error while fetching users:', error); 
+        return res.status(500).json({ message: "Internal Server Error" });
+    }
+});
+
+
+module.exports = { registerUser, authUser, getAllUsers }
