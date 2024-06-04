@@ -1,6 +1,7 @@
 const express = require('express');
 const dotenv = require('dotenv');
 const connectDB = require('./db');
+const userRoutes = require('./routes/userRoutes');
 dotenv.config();
 connectDB();
 const app = express();
@@ -13,3 +14,4 @@ const allowedOrigins = [
     PORT,
     console.log(`Server running on PORT ${PORT}...`)
   );
+  app.use('/api/user', userRoutes);

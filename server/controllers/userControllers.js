@@ -1,6 +1,5 @@
 const asyncHandler = require("express-async-handler");
-const User = require("../models/userModels");
-
+const User = require("../schemas/userSchema");
 //register the user
 const registerUser = async (req, res) => {
     const { name, email, password, year, branch,
@@ -11,11 +10,12 @@ const registerUser = async (req, res) => {
         res.status(400);
         throw new Error("Please Enter all the Feilds");
     }
-
+    
     const userExists = await User.findOne({ email });
 
     if (userExists) {
         res.status(400);
+        console.log(userExists);
         throw new Error("User already exists");
     }
 
@@ -40,7 +40,7 @@ const registerUser = async (req, res) => {
             course: user.course,
             phoneNo: user.phoneNo,
             registrationNo: user.registrationNo,
-            token: generateToken(user._id),
+            
         });
     } else {
         res.status(400);
