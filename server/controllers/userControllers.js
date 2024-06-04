@@ -71,7 +71,7 @@ const authUser = asyncHandler(async (req, res) => {
   });
   
 
-  const getAllUsers = asyncHandler(async (req, res) => {
+  const getAllUsersWithQuery = asyncHandler(async (req, res) => {
     const { registrationNo } = req.query; 
     
     // Log the registrationNo to ensure it is being received
@@ -83,7 +83,6 @@ const authUser = asyncHandler(async (req, res) => {
 
     const query = { registrationNo: { $regex: new RegExp(registrationNo, 'i') } };
     
-    // Log the constructed query to debug
     console.log('Constructed query:', query);
 
     try {
@@ -100,5 +99,14 @@ const authUser = asyncHandler(async (req, res) => {
     }
 });
 
+const getAllUsers = asyncHandler(async (req, res) => {
+    try {
+        const users = await User.find({});
+        res.status(200).json(users);
+    } catch (error) {
+        console.error('Error fetching users:', error);
+        res.status(500).json({ message: "Internal Server Error" });
+    }
+});
 
-module.exports = { registerUser, authUser, getAllUsers }
+module.exports = { registerUser, authUser, getAllUsersWithQuery, getAllUsers }
