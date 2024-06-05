@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
+const { checkout } = require("../routes/emailRoutes");
 
 const userSchema = mongoose.Schema(
     {
@@ -20,7 +21,9 @@ const userSchema = mongoose.Schema(
     course: { type: String, required: true },
       phoneNo: { type: String, required: true },
       registrationNo: { type: String, required: true },
+      goingout: { type: Boolean, required: true, default: false },
     }
+
   );
   
   userSchema.methods.matchPassword = async function (enteredPassword) {
