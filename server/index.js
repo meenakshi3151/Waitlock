@@ -5,6 +5,7 @@ const cors = require('cors');
 const connectDB = require('./db');
 const userRoutes = require('./routes/userRoutes');
 const emailRoutes = require('./routes/emailRoutes');
+const entryRoutes = require('./routes/entryRoutes');
 dotenv.config();
 connectDB();
 
@@ -31,4 +32,5 @@ const allowedOrigins = [
     console.log(`Server running on PORT ${PORT}...`)
   );
   app.use('/api/user', userRoutes);
-  app.use("/",emailRoutes)
+  app.use("/",emailRoutes);
+  app.use("/",entryRoutes);
