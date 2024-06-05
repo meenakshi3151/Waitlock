@@ -5,6 +5,7 @@ import Footer from "../components/Footer";
 function HomePage(){
     return(
     <>
+    
     <About/>
     <Contact/>
     <Footer/>

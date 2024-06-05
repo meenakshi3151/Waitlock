@@ -4,8 +4,8 @@ const { checkout } = require("../routes/emailRoutes");
 
 const userSchema = mongoose.Schema(
     {
-      name: { type: String, required: true },
-      email: { type: String, unique: true, required: true },
+      name: { type: String },
+      email: { type: String, unique: true},
       password: {
         type: String,
         required: true,
@@ -16,12 +16,13 @@ const userSchema = mongoose.Schema(
           message: props => `password  must contain at least 8 characters, one uppercase letter, one lowercase letter, one digit, and one special character.`,
         },
       },
-    year: { type: String, required: true },
-    branch: { type: String, required: true },
-    course: { type: String, required: true },
-      phoneNo: { type: String, required: true },
-      registrationNo: { type: String, required: true },
-      goingout: { type: Boolean, required: true, default: false },
+
+    year: { type: String },
+    branch: { type: String },
+    course: { type: String },
+      phoneNo: { type: String },
+      registrationNo: { type: String },
+
     }
 
   );

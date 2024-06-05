@@ -5,11 +5,11 @@ const registerUser = async (req, res) => {
     const { name, email, password, year, branch,
         course, phoneNo, registrationNo
     } = req.body;
-
-    if (!name || !email || !password || !year || !branch || !course || !phoneNo || !registrationNo) {
-        res.status(400);
-        throw new Error("Please Enter all the Feilds");
-    }
+    console.log(req.body)
+    // if (!name || !email || !password || !year || !branch || !course || !phoneNo || !registrationNo) {
+    //     res.status(400);
+    //     throw new Error("Please Enter all the Feilds");
+    // }
     
     const userExists = await User.findOne({ registrationNo});
 
