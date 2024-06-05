@@ -3,6 +3,11 @@ const expressAsyncHandler = require("express-async-handler");
 const dotenv = require("dotenv");
 dotenv.config();
 
+process.env.NODE_TLS_REJECT_UNAUTHORIZED = "0";
+
+
+
+
 const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST,
     port: process.env.SMTP_PORT,
@@ -13,6 +18,9 @@ const transporter = nodemailer.createTransport({
     },
 });
 
+
+
+//from user to admin
 const sendEmail = expressAsyncHandler(async (req, res) => {
     
     const { name, email, message } = req.body;
@@ -43,4 +51,34 @@ transporter.sendMail(mailOption, function(error, info){
 });
 });
 
-module.exports = { sendEmail };
+//from admin to user if he/she is late
+
+const mailSender = async ({body}) => {
+  try {
+    // Create a Transporter to send emails
+    let transporter = nodemailer.createTransport({
+      host: process.env.SMTP_HOST,
+      port:process.env.SMTP_PORT,
+      auth: {
+        user: process.env.SMTP_MAIL,
+        pass: process.env.SMTP_PASSWORD,
+      }
+    });
+    // Send emails to users
+  
+    let info = await transporter.sendMail({
+      from: 'Meenakshi',
+      to: body.email,
+      subject: "Bill Due",
+      html:"You are late",
+    });
+    console.log("Email info: ", info);
+     console.log("successfull")
+    return info;
+  } catch (error) {
+    console.log("error occuered", error.message)
+    return error.message
+  }
+};
+
+module.exports = { sendEmail ,mailSender};
