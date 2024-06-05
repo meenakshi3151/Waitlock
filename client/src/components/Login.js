@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
+import {useNavigate} from 'react-router-dom';
 const LoginComponent = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+const navigate = useNavigate();
   const handleLogin = async (e) => {
     e.preventDefault();
 
@@ -99,7 +99,9 @@ const LoginComponent = () => {
           </form>
           <div className="mt-4 flex items-center justify-between">
             <span className="border-b w-1/5 md:w-1/4"></span>
-            <a href="#" className="text-xs text-gray-500 uppercase">
+            <a href="#" className="text-xs text-gray-500 uppercase"
+                onClick={()=>{navigate('/signup')}}
+            >
               or sign up
             </a>
             <span className="border-b w-1/5 md:w-1/4"></span>
