@@ -11,7 +11,7 @@ const registerUser = async (req, res) => {
     //     throw new Error("Please Enter all the Feilds");
     // }
     
-    const userExists = await User.findOne({ registrationNo});
+    const userExists = await User.findOne({ email});
 
     if (userExists) {
         res.status(400);
@@ -49,9 +49,9 @@ const registerUser = async (req, res) => {
 };
 //for login
 const authUser = asyncHandler(async (req, res) => {
-    const { registrationNo, password } = req.body;
+    const { email, password } = req.body;
   
-    const user = await User.findOne({ registrationNo });
+    const user = await User.findOne({ email });
   
     if (user && (await user.matchPassword(password))) {
       res.json({
