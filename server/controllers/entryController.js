@@ -4,8 +4,9 @@ const User = require("../schemas/userSchema");
 const goingOut = asyncHandler(async (req, res) => {
     const { registrationNo } = req.body;
     const user = await User.findOne({ registrationNo });
+    value=user.goingOut;
     if (user) {
-        user.goingout= true;
+        user.goingout= !value;
         await user.save();
         res.status(200).json({ message: "Checked Out" });
     } else {
@@ -14,18 +15,5 @@ const goingOut = asyncHandler(async (req, res) => {
     }
 }
 );
-//a logged in user clicks on the pending button means he/she is coming back
-const comingBack = asyncHandler(async (req, res) => {
-    const { registrationNo } = req.body;
-    const user = await User.findOne({ registrationNo });
-    if (user) {
-        user.goingout= false;
-        await user.save();
-        res.status(200).json({ message: "Checked In" });
-    } else {
-        res.status(400);
-        throw new Error("User not found");
-    }
-}
-);
-module.exports = { goingOut , comingBack};
+
+module.exports = { goingOut};
