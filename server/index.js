@@ -6,6 +6,7 @@ const connectDB = require('./db');
 const userRoutes = require('./routes/userRoutes');
 const emailRoutes = require('./routes/emailRoutes');
 const entryRoutes = require('./routes/entryRoutes');
+const otpRoutes = require('./routes/otpRoutes');
 dotenv.config();
 connectDB();
 
@@ -34,3 +35,4 @@ const allowedOrigins = [
   app.use('/api/user', userRoutes);
   app.use("/",emailRoutes);
   app.use("/",entryRoutes);
+  app.use("/",otpRoutes);

@@ -1,7 +1,7 @@
 // models/otpModel.js
 const mongoose = require('mongoose');
 
-const { mailSender }=require('../controllers/emailControllers')
+const { mailSenderOTP }=require('../controllers/emailControllers')
 
 const otpSchema = new mongoose.Schema({
   email: {
@@ -20,7 +20,7 @@ const otpSchema = new mongoose.Schema({
 });
 async function sendVerificationEmail(email, otp) {
   try {
-    const mailResponse = await mailSender(
+    const mailResponse = await mailSenderOTP(
       email,
       "Verification Email",
       `<h1>Please confirm your OTP</h1>

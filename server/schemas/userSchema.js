@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const bcrypt = require("bcryptjs");
-const { checkout } = require("../routes/emailRoutes");
 
 const userSchema = mongoose.Schema(
     {
@@ -22,7 +21,7 @@ const userSchema = mongoose.Schema(
     course: { type: String },
       phoneNo: { type: String },
       registrationNo: { type: String },
-
+      role: { type: String, default: "user" }
     }
 
   );
