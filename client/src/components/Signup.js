@@ -10,8 +10,8 @@ const SignUpForm = () => {
     year: '',
     branch: '',
     course: '',
-    phoneNumber: '',
-    regNumber: ''
+    phoneNo: '',
+    registrationNo: ''
   });
 
   const handleChange = (e) => {
@@ -108,8 +108,8 @@ const SignUpForm = () => {
           <label className="block text-gray-700">Phone Number</label>
           <input
             type="text"
-            name="phoneNumber"
-            value={formData.phoneNumber}
+            name="phoneNo"
+            value={formData.phoneNo}
             onChange={handleChange}
             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
             required
@@ -119,8 +119,8 @@ const SignUpForm = () => {
           <label className="block text-gray-700">Registration Number</label>
           <input
             type="text"
-            name="regNumber"
-            value={formData.regNumber}
+            name="registrationNo"
+            value={formData.registrationNo}
             onChange={handleChange}
             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
             required

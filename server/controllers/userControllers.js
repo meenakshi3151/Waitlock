@@ -6,6 +6,7 @@ const registerUser = async (req, res) => {
         course, phoneNo, registrationNo
     } = req.body;
     console.log(req.body)
+    console.log(name, email, password, year, branch, course, phoneNo, registrationNo);
     // if (!name || !email || !password || !year || !branch || !course || !phoneNo || !registrationNo) {
     //     res.status(400);
     //     throw new Error("Please Enter all the Feilds");
