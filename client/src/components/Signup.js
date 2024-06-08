@@ -46,8 +46,17 @@ const SignUpForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (!otpVerified) {
-      alert('Please verify OTP before submitting');
+    e.preventDefault();
+    if (!formData.email.endsWith('@mnnit.ac.in')) {
+       toast(
+        {
+          title: "Please enter organisation email address",
+          status: "warning",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+        }
+       )
       return;
     }
     console.log(formData);
