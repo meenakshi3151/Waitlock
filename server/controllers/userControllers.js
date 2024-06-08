@@ -1,24 +1,32 @@
 const asyncHandler = require("express-async-handler");
 const User = require("../schemas/userSchema");
 //register the user
+const OTPM=require('../schemas/otpSchema');
 const registerUser = async (req, res) => {
     const { name, email, password, year, branch,
-        course, phoneNo, registrationNo
+        course, phoneNo, registrationNo,OTP
     } = req.body;
     console.log(req.body)
+    console.log(name, email, password, year, branch, course, phoneNo, registrationNo,OTP);
     // if (!name || !email || !password || !year || !branch || !course || !phoneNo || !registrationNo) {
     //     res.status(400);
     //     throw new Error("Please Enter all the Feilds");
     // }
     
     const userExists = await User.findOne({ email});
-
+   
     if (userExists) {
         res.status(400);
         console.log(userExists);
         throw new Error("User already exists");
     }
-
+    const response = await OTPM.find({ email }).sort({ createdAt: -1 }).limit(1);
+    if (response.length === 0 || otp !== response[0].otp) {
+      return res.status(400).json({
+        success: false,
+        message: 'The OTP is not valid',
+      });
+    }
     const user = await User.create({
         name,
         email,

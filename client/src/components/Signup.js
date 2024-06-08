@@ -1,8 +1,11 @@
-// SignUpForm.js
 import React, { useState } from 'react';
 import axios from 'axios';
-
+import { useToast } from "@chakra-ui/toast";
 const SignUpForm = () => {
+  const [otp, setOtp] = useState('');
+  const [otpSent, setOtpSent] = useState(false);
+  const [otpVerified, setOtpVerified] = useState(false);
+  const toast=useToast();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -10,9 +13,11 @@ const SignUpForm = () => {
     year: '',
     branch: '',
     course: '',
-    phoneNumber: '',
-    regNumber: ''
+    phoneNo: '',
+    OTP:otp,
+    registrationNo: ''
   });
+  
 
   const handleChange = (e) => {
     setFormData({
@@ -21,9 +26,31 @@ const SignUpForm = () => {
     });
   };
 
+  const handleOtpChange = (e) => {
+    setOtp(e.target.value);
+  };
+
+  const handleSendOtp = () => {
+    axios.post('http://localhost:5000/sendOTP', { email: formData.email })
+      .then(response => {
+        console.log(response.data);
+        alert('OTP sent successfully');
+        setOtpSent(true);
+      })
+      .catch(error => {
+        console.error('There was an error sending the OTP!', error);
+      });
+  };
+
+ 
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData)
+    if (!otpVerified) {
+      alert('Please verify OTP before submitting');
+      return;
+    }
+    console.log(formData);
     axios.post('http://localhost:5000/api/user/register', formData)
       .then(response => {
         console.log(response.data);
@@ -108,8 +135,8 @@ const SignUpForm = () => {
           <label className="block text-gray-700">Phone Number</label>
           <input
             type="text"
-            name="phoneNumber"
-            value={formData.phoneNumber}
+            name="phoneNo"
+            value={formData.phoneNo}
             onChange={handleChange}
             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
             required
@@ -119,13 +146,39 @@ const SignUpForm = () => {
           <label className="block text-gray-700">Registration Number</label>
           <input
             type="text"
-            name="regNumber"
-            value={formData.regNumber}
+            name="registrationNo"
+            value={formData.registrationNo}
             onChange={handleChange}
             className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
             required
           />
         </div>
+        <div className="mb-2">
+          <button
+            type="button"
+            onClick={handleSendOtp}
+            className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-200"
+            disabled={otpSent}
+          >
+            {otpSent ? 'OTP Sent' : 'Send OTP'}
+          </button>
+        </div>
+        {otpSent && (
+          <>
+            <div className="mb-2">
+              <label className="block text-gray-700">Enter OTP</label>
+              <input
+                type="text"
+                name="otp"
+                value={otp}
+                onChange={handleOtpChange}
+                className="w-full px-3 py-2 border rounded-md focus:outline-none focus:ring focus:border-blue-300"
+                required
+              />
+            </div>
+            
+          </>
+        )}
         <button
           type="submit"
           className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-200"
