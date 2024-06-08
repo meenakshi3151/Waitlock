@@ -16,10 +16,10 @@ const SignUpForm = () => {
     branch: '',
     course: '',
     phoneNo: '',
-    OTP:otp,
+    OTP:'',
     registrationNo: ''
   });
-  
+  // console.log(formData.OTP);
 
   const handleChange = (e) => {
     setFormData({
@@ -33,12 +33,25 @@ const SignUpForm = () => {
   };
 
   const handleSendOtp = () => {
-    console.log(formData.email);
+   // console.log(formData.email);
+    if (!formData.email.endsWith('@mnnit.ac.in')) {
+      toast(
+       {
+         title: "Please enter organisation email address",
+         status: "warning",
+         duration: 5000,
+         isClosable: true,
+         position: "bottom",
+       }
+      )
+     return;
+   }
     axios.post('http://localhost:5000/sendOTP', { email: formData.email })
    
       .then(response => {
-        console.log(response.data);
+     //   console.log(response.data);
        // alert('OTP sent successfully');
+      // console.log("hiiiiiiiiiiii");
         setOtpSent(true);
         toast({
           title: "OTP sent successfully",
@@ -47,6 +60,7 @@ const SignUpForm = () => {
           isClosable: true,
           position: "bottom",
         });
+        console.log(response)
       })
       .catch(error => {
         console.error('There was an error sending the OTP!', error);
@@ -66,19 +80,10 @@ const SignUpForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    e.preventDefault();
-    if (!formData.email.endsWith('@mnnit.ac.in')) {
-       toast(
-        {
-          title: "Please enter organisation email address",
-          status: "warning",
-          duration: 5000,
-          isClosable: true,
-          position: "bottom",
-        }
-       )
-      return;
-    }
+    
+  
+    console.log(formData);
+    formData.OTP=otp;
     console.log(formData);
     axios.post('http://localhost:5000/api/user/register', formData)
       .then(response => {

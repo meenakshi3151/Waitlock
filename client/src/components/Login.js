@@ -26,7 +26,7 @@ const navigate = useNavigate();
       console.error('Login error:', error);
       toast({
         title: "Error Occured",
-        status: "success",
+        status: "warning",
         duration: 5000,
         isClosable: true,
         position: "bottom",
