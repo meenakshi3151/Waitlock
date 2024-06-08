@@ -37,7 +37,7 @@ const StudentsTable = () => {
           className="px-4 py-2 bg-green-500 text-white rounded"
           onClick={() => handleAccept(row.original)}
         >
-          Accept
+          Going out
         </button>
       ),
     },
@@ -49,18 +49,19 @@ const StudentsTable = () => {
           className="px-4 py-2 bg-red-500 text-white rounded"
           onClick={() => handleReject(row.original)}
         >
-          Reject
+          Coming in
         </button>
       ),
     },
   ], []); // Empty dependency array ensures columns are only created once
 
   const handleAccept = (student) => {
-    console.log(`Accepted: ${student.name}`);
+    console.log(`Going out: ${student.name}`);
+    
   };
 
   const handleReject = (student) => {
-    console.log(`Rejected: ${student.name}`);
+    console.log(`Entered the hostel premesis: ${student.name}`);
   };
 
   const {
