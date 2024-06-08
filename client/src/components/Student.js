@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { useTable } from 'react-table';
 import axios from 'axios';
+import { useToast } from '@chakra-ui/toast';
 
 const StudentsTable = () => {
   const [data, setData] = useState([]);
-
+  const toast=useToast();
   useEffect(() => {
     const fetchUsers = async () => {
       try {
@@ -61,21 +62,49 @@ const StudentsTable = () => {
         registrationNo: student.registrationNo,
         action: 'goingOut',
       });
+      toast({
+        title: "You can go out!",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      })
       console.log(`Going out: ${student.name}`, response.data);
     } catch (error) {
       console.error('Error sending accept request:', error);
+      toast({
+        title: "You cannot go out!",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      })
     }
   };
 
   const handleReject = async (student) => {
     try {
-      const response = await axios.put('http://localhost:5000/goingOut', {
+      const response = await axios.put('http://localhost:5000/comingIn', {
         registrationNo: student.registrationNo,
         action: 'comingIn',
       });
       console.log(`Coming in: ${student.name}`, response.data);
+      toast({
+        title: "Entry is completed",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      })
     } catch (error) {
       console.error('Error sending reject request:', error);
+      toast({
+        title: "Entry is not completed",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      })
     }
   };
 

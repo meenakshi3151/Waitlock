@@ -1,5 +1,6 @@
 const express=require('express');
 const router=express.Router();
-const {goingOut}=require('../controllers/entryController');
-router.put('/goingOut',goingOut);
+const {goingOutt,comingIn}=require('../controllers/entryController');
+router.put('/goingOut',goingOutt);
+router.put('/comingIn',comingIn)
 module.exports=router;
