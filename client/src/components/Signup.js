@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import { useToast } from "@chakra-ui/toast";
+import { useNavigate } from 'react-router-dom';
 const SignUpForm = () => {
   const [otp, setOtp] = useState('');
   const [otpSent, setOtpSent] = useState(false);
   const [otpVerified, setOtpVerified] = useState(false);
   const toast=useToast();
+  const navigate=useNavigate();
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -34,11 +36,27 @@ const SignUpForm = () => {
     axios.post('http://localhost:5000/sendOTP', { email: formData.email })
       .then(response => {
         console.log(response.data);
-        alert('OTP sent successfully');
+       // alert('OTP sent successfully');
         setOtpSent(true);
+        toast({
+          title: "OTP sent successfully",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+        });
       })
       .catch(error => {
         console.error('There was an error sending the OTP!', error);
+        toast(
+          {
+            title: "There was an error sending the OTP!",
+            status: "warning",
+            duration: 5000,
+            isClosable: true,
+            position: "bottom",
+          }
+         )
       });
   };
 
@@ -64,9 +82,25 @@ const SignUpForm = () => {
       .then(response => {
         console.log(response.data);
         alert('Sign up successful');
+        toast({
+          title: "Sign up successful",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+        });
+        navigate('/login');
+        
       })
       .catch(error => {
         console.error('There was an error signing up!', error);
+        toast({
+          title: "Error occured",
+          status: "warning",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+        });
       });
   };
 

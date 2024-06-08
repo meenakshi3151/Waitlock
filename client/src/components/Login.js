@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import {useNavigate} from 'react-router-dom';
+import { useToast } from '@chakra-ui/toast';
 const LoginComponent = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const toast= useToast();
 const navigate = useNavigate();
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -11,9 +13,23 @@ const navigate = useNavigate();
     try {
       const response = await axios.post('http://localhost:5000/api/user/login', { email, password });
       console.log('Login successful:', response.data);
+      toast({
+        title: "Login successful",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
       // Handle successful login, e.g., redirect or save token
     } catch (error) {
       console.error('Login error:', error);
+      toast({
+        title: "Error Occured",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
       // Handle login error, e.g., show error message
     }
   };

@@ -11,7 +11,7 @@ function MainPage() {
       <div className="absolute inset-0 bg-black opacity-50"></div>
       <div className="relative z-10 text-center">
         <h1 className="text-4xl font-bold text-white mb-8">
-          Welcome to Hostel Management System
+          Welcome to Entry Management System
         </h1>
         <div className="flex justify-center space-x-4">
           <Link to="/signup">
