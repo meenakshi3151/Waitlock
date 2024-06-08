@@ -33,7 +33,9 @@ const SignUpForm = () => {
   };
 
   const handleSendOtp = () => {
+    console.log(formData.email);
     axios.post('http://localhost:5000/sendOTP', { email: formData.email })
+   
       .then(response => {
         console.log(response.data);
        // alert('OTP sent successfully');

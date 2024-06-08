@@ -22,9 +22,9 @@ const sendOTP = async (req, res) => {
       lowerCaseAlphabets: false,
       specialChars: false,
     });
-    console.log("hi"+otp)
+   // console.log("hi"+otp)
     let result = await OTP.findOne({ otp: otp });
-    console.log(result)
+   // console.log(result)
     while (result) {
       otp = otpGenerator.generate(4, {
         upperCaseAlphabets: false,
@@ -37,8 +37,8 @@ const sendOTP = async (req, res) => {
 
     const otpPayload = { email, otp };
     const otpBody = await OTP.create(otpPayload);
-    console.log(otpBody)
-    console.log(otpPayload)
+    // console.log(otpBody)
+    // console.log(otpPayload)
     res.status(200).json({
       success: true,
       message: 'OTP sent successfully',

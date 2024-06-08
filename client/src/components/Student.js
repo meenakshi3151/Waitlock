@@ -18,7 +18,7 @@ const StudentsTable = () => {
     };
 
     fetchUsers();
-  }, []); // Empty dependency array ensures this runs once on mount
+  }, []); 
 
   const columns = React.useMemo(() => [
     {
@@ -53,15 +53,30 @@ const StudentsTable = () => {
         </button>
       ),
     },
-  ], []); // Empty dependency array ensures columns are only created once
+  ], []); 
 
-  const handleAccept = (student) => {
-    console.log(`Going out: ${student.name}`);
-    
+  const handleAccept = async (student) => {
+    try {
+      const response = await axios.put('http://localhost:5000/goingOut', {
+        registrationNo: student.registrationNo,
+        action: 'goingOut',
+      });
+      console.log(`Going out: ${student.name}`, response.data);
+    } catch (error) {
+      console.error('Error sending accept request:', error);
+    }
   };
 
-  const handleReject = (student) => {
-    console.log(`Entered the hostel premesis: ${student.name}`);
+  const handleReject = async (student) => {
+    try {
+      const response = await axios.put('http://localhost:5000/goingOut', {
+        registrationNo: student.registrationNo,
+        action: 'comingIn',
+      });
+      console.log(`Coming in: ${student.name}`, response.data);
+    } catch (error) {
+      console.error('Error sending reject request:', error);
+    }
   };
 
   const {

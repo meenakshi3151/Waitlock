@@ -20,7 +20,8 @@ const navigate = useNavigate();
         isClosable: true,
         position: "bottom",
       });
-      // Handle successful login, e.g., redirect or save token
+      
+      navigate('/student');
     } catch (error) {
       console.error('Login error:', error);
       toast({
