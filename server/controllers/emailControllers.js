@@ -69,14 +69,14 @@ const mailSender = async ({body}) => {
     let info = await transporter.sendMail({
       from: 'Meenakshi',
       to: body.email,
-      subject: "Bill Due",
+      subject: "Late Entry",
       html:"You are late",
     });
     console.log("Email info: ", info);
      console.log("successfull")
     return info;
   } catch (error) {
-    console.log("error occuered", error.message)
+    console.log("error occured", error.message)
     return error.message
   }
 };

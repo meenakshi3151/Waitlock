@@ -2,9 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { useTable } from 'react-table';
 import axios from 'axios';
 import { useToast } from '@chakra-ui/toast';
-
+import { Link } from 'react-router-dom';
 const StudentsTable = () => {
   const [data, setData] = useState([]);
+  const [latedata,setLateData]=useState([]); 
   const toast=useToast();
   useEffect(() => {
     const fetchUsers = async () => {
@@ -21,6 +22,40 @@ const StudentsTable = () => {
     fetchUsers();
   }, []); 
 
+  useEffect(() => {
+    const fetchLateStudents = async () => {
+      try {
+        console.log('Fetching late students...');
+        const response = await axios.get('http://localhost:5000/getAllLateStudents');
+        console.log('Data fetched:', response.data);
+        setLateData(response.data);
+
+        // Send email to late students
+        response.data.forEach(student => {
+          sendEmail(student);
+        });
+      } catch (error) {
+        console.error('Error fetching late students:', error);
+      }
+    };
+
+    fetchLateStudents();
+  }, []);
+
+  const sendEmail = (student) => {
+    axios.post('http://localhost:5000/sendEmail', {
+      body: student
+    })
+      .then(response => {
+        console.log('Email sent:', response.data);
+      })
+      .catch(error => {
+        console.error('Error sending email:', error);
+      });
+  };
+
+
+  
   const columns = React.useMemo(() => [
     {
       Header: 'Student Name',
@@ -118,6 +153,27 @@ const StudentsTable = () => {
 
   return (
     <div className="container mx-auto mt-8">
+    <div>
+        <ul className="flex space-x-4">
+            <li>
+                <Link 
+                    to="/studentin" 
+                    className="text-blue-500 hover:text-blue-700 focus:outline-none focus:text-blue-700 transition duration-300 ease-in-out border-b-2 border-transparent hover:border-blue-500"
+                >
+                    IN
+                </Link>
+            </li>
+            <li>
+                <Link 
+                    to="/studentout" 
+                    className="text-blue-500 hover:text-blue-700 focus:outline-none focus:text-blue-700 transition duration-300 ease-in-out border-b-2 border-transparent hover:border-blue-500"
+                >
+                    OUT
+                </Link>
+            </li>
+        </ul>
+    </div>
+
       <table {...getTableProps()} className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
           {headerGroups.map(headerGroup => (
@@ -152,6 +208,7 @@ const StudentsTable = () => {
         </tbody>
       </table>
     </div>
+  
   );
 };
 
