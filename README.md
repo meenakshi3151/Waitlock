@@ -25,7 +25,7 @@ This project provides a web interface for student registration, login, tracking 
 - CORS configured for React  
 - MongoDB connection  
 
-## 🧰 Tech Stack
+## Tech Stack
 
 ### **Frontend**
 - React.js
