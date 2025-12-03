@@ -24,3 +24,33 @@ This project provides a web interface for student registration, login, tracking 
 - Entry/Exit logging route  
 - CORS configured for React  
 - MongoDB connection  
+
+## 🧰 Tech Stack
+
+### **Frontend**
+- React.js
+- React Router DOM
+- HTML5 / CSS3
+- JavaScript (ES6+)
+- Axios (for API calls)
+
+### **Backend**
+- Node.js
+- Express.js
+- MongoDB + Mongoose
+- Nodemailer (Mail service)
+- JSON Web Tokens (JWT)
+- Bcrypt (Password hashing)
+- OTP Verification System
+
+### **Tools & Environment**
+- Git & GitHub
+- Postman (API testing)
+- dotenv (Environment variables)
+- CORS Middleware
+- VS Code
+
+### **Hosting Options (Optional)**
+- Frontend: Vercel / Netlify
+- Backend: Render / Railway / AWS EC2
+- Database: MongoDB Atlas
